@@ -1,10 +1,17 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 // Konosuba Mark, $1 Sin Tax, 2 Punishment, Optional Required
 class Main {
 
 	public static void main(final String[] args) {
+		final LocalDate currentDate = LocalDate.now();
+      final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+      final String formattedDate = currentDate.format(formatter);
+
 		final Scanner sc = new Scanner(System.in);
 		final String ANSI_RESET = "\u001B[0m";
 		final String ANSI_RED = "\u001B[31m";
@@ -83,7 +90,7 @@ class Main {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 
-		final double avg = Math.round((sum / Party.getTotal()) * 100);
+		final double percent = Math.round((sum / Party.getTotal()) * 100);
 		System.out
 				.println(
 						ANSI_BLUE + "\nBlue Vote " + (int) Math.round((blue / Party.getBlueTotal()) * 100) + "% " + (int) blue + "/"
@@ -91,19 +98,20 @@ class Main {
 		System.out
 				.println(ANSI_RED + "Red Vote " + (int) Math.round((red / Party.getRedTotal()) * 100) + "% " + (int) red + "/"
 						+ (int) Party.getRedTotal() + ANSI_RESET);
-		System.out.println("\nTotal: " + (int) avg + "% " + (int) sum + "/" + (int) Party.getTotal() + "\n");
+		System.out.println("\nTotal: " + (int) percent + "% " + (int) sum + "/" + (int) Party.getTotal() + "\n");
 
-		if (avg == 100) {
+		if (percent == 100) {
 			System.out.print("Perfect Game = \"Free\"");
-		} else if (avg >= 75) {
+
+		} else if (percent >= 75) {
 			System.out.print("Rhodium Day = \"Top 100 Anime\"");
-		} else if (avg >= 67) {
-			System.out.print("Titanium Day = \"Abyss Pass\"");
-		} else if (avg >= 60) {
-			System.out.print("Diamond Day = \"T Pass\"");
-		} else if (avg >= 51) {
-			System.out.println("Golden Day = \"Rendo Pass\"");
-			final Die die = new Die();
+		} else if (percent >= 67) {
+			System.out.print(formattedDate + " Titanium Day = \"Abyss Pass\" " + percent);
+		} else if (percent >= 60) {
+			System.out.print(formattedDate + " Diamond Day = \"T Pass\" " + percent);
+		} else if (percent >= 51) {
+			System.out.println(formattedDate + " Golden Day = \"Rendo Pass\" " + percent);
+final Die die = new Die();
 			System.out.println("Random Done: " + die.roll());
 		} else {
 			System.out.print("Limbo\n");
